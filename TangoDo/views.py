@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from TangoDo.models import Topic
+from TangoDo.models import Topic, Entry
 from TangoDo.forms import TopicForm, EntryForm
 
 
@@ -54,3 +54,17 @@ def add_entry(request, topic_id):
             entry.save()
             return HttpResponseRedirect(reverse('tango_do:topic', args=[topic_id]))
     return render(request, 'TangoDo/add_entry.html', {'topic': topic, 'form': form})
+
+
+def edit_entry(request, entry_id):
+    """Edit an existing entry"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    if request.method != 'POST':
+        form = EntryForm(instance=entry)
+    else:
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('tango_do:topic', args=[topic.id]))
+    return render(request, 'TangoDo/edit_entry.html', {'entry': entry, 'topic': topic, 'form': form})

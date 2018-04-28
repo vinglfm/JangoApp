@@ -11,6 +11,7 @@
             <li>
                 <p>{{ entry.add_date|date:'M d, Y H:i' }}</p>
                 <p>{{ entry.text|linebreaks }}</p>
+                <a href="{% url 'tango_do:edit_entry' entry.id %}">edit entry</a>
             </li>
         {% empty %}
             <li>
