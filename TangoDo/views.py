@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from TangoDo.models import Topic
-from TangoDo.forms import TopicForm
+from TangoDo.forms import TopicForm, EntryForm
 
 
 # Create your views here.
@@ -38,3 +38,19 @@ def add_topic(request):
             form.save()
             return HttpResponseRedirect(reverse('tango_do:topics'))
     return render(request, 'TangoDo/add_topic.html', {'form': form})
+
+
+def add_entry(request, topic_id):
+    """Add a new entry to topic"""
+    topic = Topic.objects.get(id=topic_id)
+
+    if request.method != 'POST':
+        form = EntryForm()
+    else:
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            entry.topic = topic
+            entry.save()
+            return HttpResponseRedirect(reverse('tango_do:topic', args=[topic_id]))
+    return render(request, 'TangoDo/add_entry.html', {'topic': topic, 'form': form})
