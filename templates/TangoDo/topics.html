@@ -1,19 +1,23 @@
 {% extends "TangoDo/base.html" %}
 
-{% block content %}
+{% block header %}
+    <h1>Topics</h1>
+{% endblock %}
 
-    <p>Topics</p>
+{% block content %}
 
     <ul>
         {% for topic in topics %}
             <li>
-                <a href="{% url 'tango_do:topic' topic.id %}">{{ topic }}</a>
+                <h3>
+                    <a href="{% url 'tango_do:topic' topic.id %}">{{ topic }}</a>
+                </h3>
             </li>
         {% empty %}
             <li>No topics have been added yet.</li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'tango_do:add_topic' %}">Add new topic</a>
+    <h3><a href="{% url 'tango_do:add_topic' %}">Add new topic</a></h3>
 
 {% endblock content %}
