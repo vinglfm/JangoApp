@@ -6,7 +6,7 @@
 </head>
 <body>
 <p>
-    <a href="{% url 'tango_do:index' %}">Learning Log</a>
+    <a href="{% url 'tango_do:index' %}">TangoDo</a>
     <a href="{% url 'tango_do:topics' %}">Topics</a>
     {% if user.is_authenticated %}
         Hello, {{ user.username }}.
