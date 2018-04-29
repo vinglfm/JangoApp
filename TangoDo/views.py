@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -14,6 +15,7 @@ def index(request):
     return render(request, 'TangoDo/index.html')
 
 
+@login_required
 def topics(request):
     """Show all topics"""
     topics = Topic.objects.order_by('add_date')
